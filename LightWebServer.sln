@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightWebServer", "LightWebS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebConsole", "WebConsole\WebConsole.csproj", "{81AC4427-9FF0-4A60-A5A6-5832E55E3795}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpers", "Helpers\Helpers.csproj", "{2FBC115C-9EAD-4477-9F06-77F8C1A83B61}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,6 +20,10 @@ Global
 		{81AC4427-9FF0-4A60-A5A6-5832E55E3795}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81AC4427-9FF0-4A60-A5A6-5832E55E3795}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81AC4427-9FF0-4A60-A5A6-5832E55E3795}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FBC115C-9EAD-4477-9F06-77F8C1A83B61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FBC115C-9EAD-4477-9F06-77F8C1A83B61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FBC115C-9EAD-4477-9F06-77F8C1A83B61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FBC115C-9EAD-4477-9F06-77F8C1A83B61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection

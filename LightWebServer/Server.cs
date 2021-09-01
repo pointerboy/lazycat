@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Helpers;
 
 namespace LightWebServer
 {
@@ -64,12 +65,24 @@ namespace LightWebServer
       {
          HttpListenerContext context = await listener.GetContextAsync();
          _semaphore.Release();
+
+         Log(context.Request);
          
          string response = "Hello World!";
          byte[] encoded = Encoding.UTF8.GetBytes(response);
          context.Response.ContentLength64 = encoded.Length;
          context.Response.OutputStream.Write(encoded, 0, encoded.Length);
          context.Response.OutputStream.Close();
+      }
+
+      public static void Log(HttpListenerRequest request)
+      {
+         // TODO: Work a possibly better logging system
+
+         string log = String.Format("REQUEST: {0} {1}/{2}", request.RemoteEndPoint,
+            request.HttpMethod, request.Url.AbsoluteUri.RightOf('/', 3));
+         
+         Console.WriteLine(log);
       }
 
       public static void SpawnServer(int port)
