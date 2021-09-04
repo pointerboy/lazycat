@@ -7,7 +7,7 @@ namespace WebConsole
     {
         public static void Main(string[] args)
         {
-            Server.SpawnServer(8000);
+            Server.SpawnServer(8000, "");
             Console.ReadKey();
         }
     }
