@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Scriban.Runtime;
 
 namespace WebApplicationConsole
 {
@@ -17,13 +20,15 @@ namespace WebApplicationConsole
 
         private static void Test()
         {
-            server.RenderWebTemplate(@"C:\Users\Luka\RiderProjects\LightWebServer\WebApplicationConsole\Web\test.html");
+            ScriptObject obj = new ScriptObject();
+            
+            obj.Add("variable", "World");
+            server.RenderWebTemplate(@"C:\Users\Luka\RiderProjects\LightWebServer\WebApplicationConsole\Web\test.html", 
+                obj);
         }
 
         private static void IndexPage()
         {
-            string hello_world = "Hello_World!";
-            server.RenderWebTemplate(@"C:\Users\Luka\RiderProjects\LightWebServer\WebApplicationConsole\Web\index.html", hello_world);
         }
     }
 }

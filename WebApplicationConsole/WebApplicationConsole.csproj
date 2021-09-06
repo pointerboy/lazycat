@@ -32,6 +32,9 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="Scriban, Version=4.0.1.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\packages\Scriban.4.0.1\lib\netstandard2.0\Scriban.dll</HintPath>
+        </Reference>
         <Reference Include="System" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />

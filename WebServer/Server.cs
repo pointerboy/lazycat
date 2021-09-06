@@ -1,9 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading;
+using Scriban;
+using Scriban.Functions;
+using Scriban.Parsing;
+using Scriban.Runtime;
 
 namespace WebServer
 {
@@ -138,15 +147,58 @@ namespace WebServer
             Routes.Add(path, action);
         }
 
-        public void RenderWebTemplate(string template_name, params object[] arguments)
+        private static IEnumerable<T> EnumerateTuple<T>(ITuple x)
+        {
+            for (var i = 1; i < x.Length; i++)
+                yield return (T) x[i];
+        }
+        
+        private static ScriptObject BuildScriptObject(ExpandoObject expando)
+        {
+            var dict = (IDictionary<string, object>) expando;
+            var scriptObject = new ScriptObject();
+
+            foreach (var kv in dict)
+            {
+                var renamedKey = StandardMemberRenamer.Rename(kv.Key);
+
+                if (kv.Value is ExpandoObject expandoValue)
+                {
+                    scriptObject.Add(renamedKey, BuildScriptObject(expandoValue));
+                }
+                else
+                {
+                    scriptObject.Add(renamedKey, kv.Value);
+                }
+            }
+
+            return scriptObject;
+        }
+        
+        private string ParseWebFile(string template, ScriptObject arguments)
+        {
+            // TODO: Figure out a new way for passing data
+            
+            string workingTemplate = File.ReadAllText(template);
+            var scribanTemplate = Template.Parse(workingTemplate);
+
+            var context = new TemplateContext(arguments);
+            var result = scribanTemplate.Render(context);
+            
+            return result;
+        }
+        
+        public void RenderWebTemplate(string template_name, ScriptObject arguments)
         {
             var filename = template_name;
-
+            string returnFile = ParseWebFile(filename, arguments);
+            
             if (File.Exists(filename))
             {
                 try
                 {
-                    Stream input = new FileStream(filename, FileMode.Open);
+                    byte[] returnBytes = Encoding.ASCII.GetBytes(returnFile);
+                    Stream input = new MemoryStream(returnBytes);
 
                     //Adding permanent http response headers
                     string mime;
@@ -179,17 +231,16 @@ namespace WebServer
         }
         private void ProcessWebRequest(HttpListenerContext context)
         {
-            Action routeAction;
             string routePath = context.Request.Url.AbsolutePath;
-
             bool pageExists = false;
+            
             foreach (var routeElement in Routes)
             {
                 if (routeElement.Key == routePath.TrimStart('/'))
                 {
                     _dirtyContext = context;
                     
-                    routeAction = routeElement.Value;
+                    var routeAction = routeElement.Value;
                     routeAction.Invoke();
                     
                     pageExists = true;
