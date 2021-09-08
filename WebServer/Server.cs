@@ -147,34 +147,6 @@ namespace WebServer
             Routes.Add(path, action);
         }
 
-        private static IEnumerable<T> EnumerateTuple<T>(ITuple x)
-        {
-            for (var i = 1; i < x.Length; i++)
-                yield return (T) x[i];
-        }
-        
-        private static ScriptObject BuildScriptObject(ExpandoObject expando)
-        {
-            var dict = (IDictionary<string, object>) expando;
-            var scriptObject = new ScriptObject();
-
-            foreach (var kv in dict)
-            {
-                var renamedKey = StandardMemberRenamer.Rename(kv.Key);
-
-                if (kv.Value is ExpandoObject expandoValue)
-                {
-                    scriptObject.Add(renamedKey, BuildScriptObject(expandoValue));
-                }
-                else
-                {
-                    scriptObject.Add(renamedKey, kv.Value);
-                }
-            }
-
-            return scriptObject;
-        }
-        
         private string ParseWebFile(string template, ScriptObject arguments)
         {
             // TODO: Figure out a new way for passing data
