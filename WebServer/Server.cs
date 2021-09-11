@@ -138,6 +138,8 @@ namespace WebServer
                 }
                 catch (HttpListenerException exception)
                 {
+                    Console.WriteLine("ERROR: HTTP Listener raised an exception!");
+                    Console.WriteLine(exception.Message);
                 }
             }
         }
