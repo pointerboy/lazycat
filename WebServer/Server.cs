@@ -156,9 +156,9 @@ namespace WebServer
             return result;
         }
         
-        public void RenderWebTemplate(string template_name, ScriptObject arguments)
+        public void RenderWebTemplate(string templateName, ScriptObject arguments)
         {
-            var filename = template_name;
+            var filename = templateName;
             string returnFile = ParseWebFile(filename, arguments);
             
             if (File.Exists(filename))
