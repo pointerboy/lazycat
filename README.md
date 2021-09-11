@@ -49,7 +49,7 @@ Add a web route using the ```AddWebRoute``` that takes in route path (e.g "index
 </html>
 ```
 
-Rendering engine lazycat uses is Scriban. If you wish to learn more about how the language works, check out: https://github.com/scriban/scriban/blob/master/doc/language.md
+Rendering engine lazycat uses Scriban. If you wish to learn more about how the language works - check out: https://github.com/scriban/scriban/blob/master/doc/language.md
 
 ```html
 <ul id='products'>
