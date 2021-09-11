@@ -21,15 +21,9 @@ namespace WebServer
         private Thread _thread;
         private HttpListener _httpListener;
         private int _runningPort;
+        
         private string _rootDirectory;
 
-        private readonly string[] _indexFiles =
-        {
-            "index.html",
-            "index.htm",
-            "default.html",
-            "default.htm"
-        };
 
         private HttpListenerContext _dirtyContext;
 
